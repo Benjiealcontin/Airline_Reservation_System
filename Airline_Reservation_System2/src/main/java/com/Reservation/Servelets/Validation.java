@@ -1,27 +1,20 @@
 package com.Reservation.Servelets;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.Reservation.Dao.LoginValidation;
 import com.Reservation.Model.Admin;
 import com.Reservation.Model.Users;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 /**
  * Servlet implementation class Validation
  */
-@WebServlet("/Validations")
 public class Validation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -50,10 +43,6 @@ public class Validation extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		final String url = "jdbc:mysql://localhost:3306/airline_reservation";
-		final String username = "root";
-		final String password = "";
-
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 
@@ -68,30 +57,12 @@ public class Validation extends HttpServlet {
 
 		LoginValidation valid = new LoginValidation();
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url, username, password);
-			PreparedStatement pst = conn.prepareStatement("SELECT * FROM `users` WHERE Email ='" + email + "'");
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-
-				String fname = rs.getString("Firstname");
-
-				if (valid.UserValidation(user)) {
-					HttpSession session = request.getSession();
-					session.setAttribute("Firstname", fname);
-					request.getRequestDispatcher("Userpage.jsp").forward(request, response);
-				} else {
-					response.sendRedirect("LoginForm.jsp");
-				}
-			}
-
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
 		if (valid.AdminValidate(admin)) {
 			response.sendRedirect("Adminpage.jsp");
+		} else if (valid.UserValidation(user)) {
+			HttpSession session = request.getSession();
+			session.setAttribute("email", email);
+			response.sendRedirect("Userpage.jsp");
 		} else {
 			response.sendRedirect("LoginForm.jsp");
 		}

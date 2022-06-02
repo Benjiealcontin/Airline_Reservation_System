@@ -22,6 +22,8 @@
                 <a href="Userlists.jsp" class="nav-item nav-link">User List</a>
                 <a href="Addbooking.jsp" class="nav-item nav-link">Add Booking</a>
                 <a href="Bookinglists.jsp" class="nav-item nav-link">Booking List</a>
+                <a href="Paymentlists.jsp" class="nav-item nav-link">Payment Lists</a>
+                <a href="Confirm_Bookinglists.jsp" class="nav-item nav-link">Confirm Booking</a>
                 <a href="#" class="nav-item nav-link disabled" tabindex="-1">Hi, Admin</a>
             </div>
             <div class="navbar-nav ms-auto">
@@ -32,7 +34,7 @@
 </nav>
 <div class="container">
    <div class="signup-form">
-    <form action="AdduserFromAdmin" method="POST" onSubmit="return validation();">
+    <form action="CheckExistsAdmin" method="POST" onSubmit="return validation();">
 		<h2>Add user</h2>
         <div class="form-group">
 			<div class="row">

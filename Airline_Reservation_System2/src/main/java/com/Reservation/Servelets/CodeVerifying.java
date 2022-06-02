@@ -2,28 +2,25 @@ package com.Reservation.Servelets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.Reservation.Model.Email;
 
-import com.Reservation.Dao.CrudOperation;
-import com.Reservation.Model.Users;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Adduser
+ * Servlet implementation class CodeVerifying
  */
-@WebServlet("/Adduser")
-public class Adduser extends HttpServlet {
+public class CodeVerifying extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Adduser() {
+	public CodeVerifying() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -49,25 +46,22 @@ public class Adduser extends HttpServlet {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
 
-		Users users = new Users();
+		request.setAttribute("First", fname);
+		request.setAttribute("Last", lname);
+		request.setAttribute("Email", email);
+		request.setAttribute("Pass", pass);
 
-		users.setFirstname(fname);
-		users.setLastname(lname);
-		users.setEmail(email);
-		users.setPassword(pass);
+		HttpSession session = request.getSession();
+		Email user = (Email) session.getAttribute("authcode");
+		String code = request.getParameter("authcode");
 
-		CrudOperation ope = new CrudOperation();
-		int i = ope.Adduser(users);
+		if (code.equals(user.getCode())) {
+			RequestDispatcher rd11 = request.getRequestDispatcher("Adduser");
+			rd11.forward(request, response);
 
-		if (i > 0) {
-			HttpSession session = request.getSession();
-			session.setAttribute("Firstname", fname);
-			RequestDispatcher rd = request.getRequestDispatcher("Userpage.jsp");
-			rd.include(request, response);
 		} else {
-			response.sendRedirect("errorhandlers/Failedtoadd.jsp");
+			response.sendRedirect("errorhandlers/CodeError.jsp");
 		}
-
 	}
 
 }

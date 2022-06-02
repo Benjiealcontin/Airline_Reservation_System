@@ -39,7 +39,7 @@
 				</div>
 				<div class="form-group">
 					<input type="password" class="form-control" name="pass" id="pass" value="${P}"
-						required> <span
+						readonly> <span
 						id="messages" style="color: red"> </span>
 				</div>
 				<div class="form-group">

@@ -2,28 +2,25 @@ package com.Reservation.Servelets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.Reservation.Dao.CrudOperation;
 import com.Reservation.Model.Users;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 /**
- * Servlet implementation class Adduser
+ * Servlet implementation class AdduserFromAdmin
  */
-@WebServlet("/Adduser")
-public class Adduser extends HttpServlet {
+public class AdduserFromAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Adduser() {
+	public AdduserFromAdmin() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -44,6 +41,7 @@ public class Adduser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
 		String email = request.getParameter("email");
@@ -60,14 +58,11 @@ public class Adduser extends HttpServlet {
 		int i = ope.Adduser(users);
 
 		if (i > 0) {
-			HttpSession session = request.getSession();
-			session.setAttribute("Firstname", fname);
-			RequestDispatcher rd = request.getRequestDispatcher("Userpage.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("Userlists.jsp");
 			rd.include(request, response);
 		} else {
 			response.sendRedirect("errorhandlers/Failedtoadd.jsp");
 		}
-
 	}
 
 }

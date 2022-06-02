@@ -11,7 +11,7 @@
 <body>
 <div class="container">
    <div class="signup-form">
-    <form action="Validations" method="post">
+    <form action="Validation" method="post">
 		<h2>Login</h2>
 		<p class="hint-text"></p>
         <div class="form-group">
@@ -24,7 +24,7 @@
             <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
         </div>
     </form>
-	<div class="text-center">No account? <a href="RegisterForm.jsp">Sign up</a></div>
+	<div class="text-center">No account? <a href="RegisterForm.jsp">Register Now!</a></div>
 </div>
 </div>
 </body>

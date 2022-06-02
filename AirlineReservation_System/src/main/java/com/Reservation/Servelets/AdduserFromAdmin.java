@@ -1,29 +1,30 @@
 package com.Reservation.Servelets;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 
 import com.Reservation.Dao.CrudOperation;
 import com.Reservation.Model.Users;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Adduser
  */
 @WebServlet("/Adduser")
-public class Adduser extends HttpServlet {
+public class AdduserFromAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Adduser() {
+	public AdduserFromAdmin() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -32,8 +33,7 @@ public class Adduser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -44,10 +44,11 @@ public class Adduser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String fname = request.getParameter("fname");
-		String lname = request.getParameter("lname");
-		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
+
+		String fname = (String) request.getAttribute("First");
+		String lname = (String) request.getAttribute("Last");
+		String email = (String) request.getAttribute("Email");
+		String pass = (String) request.getAttribute("Pass");
 
 		Users users = new Users();
 
